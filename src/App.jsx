@@ -1,9 +1,12 @@
-import { PostsList } from './pages/PostsList.jsx'
 import './App.css'
+
 import { useState } from 'react'
 
-function App() {
+import { PostsList } from './pages'
+
+const App = () => {
   const [state, setState] = useState(0)
+
   return <PostsList />
 }
 
