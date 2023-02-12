@@ -1,6 +1,8 @@
 import { LikeOutlined } from '@ant-design/icons'
-import { List, Space, Button } from 'antd'
+import { Button, List, Space, Typography } from 'antd'
 import React from 'react'
+
+const { Paragraph } = Typography
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -10,20 +12,6 @@ const IconText = ({ icon, text }) => (
 )
 
 const PostPreview = ({ post }) => {
-  console.log(typeof post.body)
-
-  function countToThreeDots(text) {
-    let counter = 0
-    for (let i = 0; i < text.length; i++) {
-      if (text[i] === '.') {
-        counter++
-        if (counter === 3) {
-          return i + 1
-        }
-      }
-    }
-  }
-
   return (
     <List.Item
       actions={[
@@ -37,7 +25,16 @@ const PostPreview = ({ post }) => {
     >
       <List.Item.Meta
         title={post.title}
-        description={post.body.slice(0, countToThreeDots(post.body))}
+        description={
+          <Paragraph
+            ellipsis={{
+              rows: 2,
+              expandable: true,
+            }}
+          >
+            {post.body}
+          </Paragraph>
+        }
       />
     </List.Item>
   )
