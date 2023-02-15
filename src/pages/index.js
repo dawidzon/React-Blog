@@ -1,3 +1,4 @@
+import PostDetails from './PostDetails'
 import PostsList from './PostsList'
 
-export { PostsList }
+export { PostDetails, PostsList }

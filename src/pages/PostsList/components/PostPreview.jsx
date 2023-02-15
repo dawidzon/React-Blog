@@ -1,17 +1,16 @@
 import { LikeOutlined } from '@ant-design/icons'
-import { Button, List, Space, Typography } from 'antd'
-import React from 'react'
+import { Button, List, Typography } from 'antd'
+import { useNavigate } from 'react-router-dom'
+
+import IconText from './IconText'
 
 const { Paragraph } = Typography
 
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-)
-
 const PostPreview = ({ post }) => {
+  const navigate = useNavigate()
+
+  const handleNavigate = (postId) => navigate(`/posts/${postId}`)
+
   return (
     <List.Item
       actions={[
@@ -20,7 +19,9 @@ const PostPreview = ({ post }) => {
           text={post.likesCount}
           key="list-vertical-like-o"
         />,
-        <Button key="button-vertical">More...</Button>,
+        <Button onClick={() => handleNavigate(post.id)} key="button-vertical">
+          More...
+        </Button>,
       ]}
     >
       <List.Item.Meta
@@ -29,7 +30,6 @@ const PostPreview = ({ post }) => {
           <Paragraph
             ellipsis={{
               rows: 2,
-              expandable: true,
             }}
           >
             {post.body}
