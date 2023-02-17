@@ -6,7 +6,7 @@ import { PostPreview } from './components'
 
 const PostsList = () => {
   const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState([false])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
