@@ -1,8 +1,8 @@
 import './App.css'
 
+import { MainLayout } from 'components'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { MainLayout } from './components'
 import { PostDetails, PostsList } from './pages'
 
 const App = () => (
