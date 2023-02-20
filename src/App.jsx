@@ -3,7 +3,7 @@ import './App.css'
 import { MainLayout } from 'components'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { PostDetails, PostsList } from './pages'
+import { NotFound, PostDetails, PostsList } from './pages'
 
 const App = () => (
   <Routes>
@@ -13,6 +13,7 @@ const App = () => (
         <Route path=":postId" element={<PostDetails />} />
       </Route>
     </Route>
+    <Route path="not-found" element={<NotFound />} />
     <Route path="*" element={<Navigate to="posts" replace />} />
   </Routes>
 )
