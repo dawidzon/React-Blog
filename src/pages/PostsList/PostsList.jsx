@@ -1,30 +1,24 @@
 import { List } from 'antd'
 import { Loading } from 'components'
-import { useEffect, useState } from 'react'
-import postService from 'services/post'
-
+import { useQuery } from 'react-query'
+import { postService } from 'services'
 import { PostPreview } from './components'
 
 const PostsList = () => {
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(false)
+  const {
+    isLoading,
+    data: posts,
+    error,
+  } = useQuery('posts', postService.fetchPosts)
 
-  useEffect(() => {
-    console.log('elo')
-    setLoading(true)
-    postService
-      .fetchPosts()
-      .then((data) => {
-        console.log('then')
-        setPosts(data)
-      })
-      .finally(() => setLoading(false))
-  }, [])
+  if (error) {
+    return <h1>{error.message}</h1>
+  }
 
   return (
     <>
-      {loading && <Loading />}
-      {!loading && (
+      {isLoading && <Loading />}
+      {!isLoading && (
         <List
           bordered
           itemLayout="vertical"
