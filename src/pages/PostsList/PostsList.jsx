@@ -2,6 +2,7 @@ import { List } from 'antd'
 import { Loading } from 'components'
 import { useQuery } from 'react-query'
 import { postService } from 'services'
+
 import { PostPreview } from './components'
 
 const PostsList = () => {
