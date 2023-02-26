@@ -1,7 +1,7 @@
 import { LikeOutlined } from '@ant-design/icons'
 import { IconText, Loading } from 'components'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { postService } from 'services'
 
 const PostDetails = () => {
@@ -11,10 +11,13 @@ const PostDetails = () => {
     isLoading,
     data: post,
     error,
-  } = useQuery('post', () => postService.fetchPost(postId))
+  } = useQuery(['post', postId], () => postService.fetchPost(postId))
+
+  const navigate = useNavigate()
+  const handleBackHome = () => navigate('/not-found')
 
   if (error) {
-    return <h1>{error.message}</h1>
+    handleBackHome()
   }
 
   return (

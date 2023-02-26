@@ -1,6 +1,7 @@
 import { List } from 'antd'
 import { Loading } from 'components'
 import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import { postService } from 'services'
 
 import { PostPreview } from './components'
@@ -12,8 +13,11 @@ const PostsList = () => {
     error,
   } = useQuery('posts', postService.fetchPosts)
 
+  const navigate = useNavigate()
+  const handleBackHome = () => navigate('/not-found')
+
   if (error) {
-    return <h1>{error.message}</h1>
+    handleBackHome()
   }
 
   return (
