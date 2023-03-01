@@ -14,10 +14,10 @@ const PostDetails = () => {
   } = useQuery(['post', postId], () => postService.fetchPost(postId))
 
   const navigate = useNavigate()
-  const handleBackHome = () => navigate('/not-found')
+  const handleNotFoundPage = () => navigate('/not-found')
 
-  if (error) {
-    handleBackHome()
+  if (error?.message === 'Not found') {
+    handleNotFoundPage()
   }
 
   return (
@@ -25,8 +25,8 @@ const PostDetails = () => {
       {isLoading && <Loading />}
       {!isLoading && (
         <>
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
+          <h1>{post?.title}</h1>
+          <p>{post?.body}</p>
           <IconText icon={LikeOutlined} text={post.likesCount} />
         </>
       )}

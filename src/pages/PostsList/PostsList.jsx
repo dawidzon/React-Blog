@@ -14,10 +14,10 @@ const PostsList = () => {
   } = useQuery('posts', postService.fetchPosts)
 
   const navigate = useNavigate()
-  const handleBackHome = () => navigate('/not-found')
+  const handleNotFoundPage = () => navigate('/not-found')
 
-  if (error) {
-    handleBackHome()
+  if (error?.message === 'Not found') {
+    handleNotFoundPage()
   }
 
   return (
