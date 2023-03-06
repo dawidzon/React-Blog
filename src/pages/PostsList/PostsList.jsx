@@ -16,8 +16,12 @@ const PostsList = () => {
   const navigate = useNavigate()
   const handleNotFoundPage = () => navigate('/not-found')
 
-  if (error?.message === 'Not found') {
-    handleNotFoundPage()
+  if (error) {
+    if (error?.message === 'Not found') {
+      handleNotFoundPage()
+    } else if (error?.message !== 'Not found') {
+      return <h1>{error.message}</h1>
+    }
   }
 
   return (
