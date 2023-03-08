@@ -19,7 +19,7 @@ const PostsList = () => {
   if (error) {
     if (error?.message === 'Not found') {
       handleNotFoundPage()
-    } else if (error?.message !== 'Not found') {
+    } else {
       return <h1>{error.message}</h1>
     }
   }
