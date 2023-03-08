@@ -7,15 +7,13 @@ const postService = {
   fetchPosts: () => fetch(BASE_URL).then((response) => response.json()),
 
   fetchPost: (postId) =>
-    fetch(`${BASE_URL}/${postId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (isEmpty(data)) {
-          throw new Error('Not found')
-        }
+    fetch(`${BASE_URL}/${postId}`).then((response) => {
+      if (!response.ok) {
+        throw new Error('Not found')
+      }
 
-        return data
-      }),
+      return data
+    }),
 
   updatePost: (postId, body) =>
     fetch(`${BASE_URL}/${postId}`, {
@@ -32,9 +30,13 @@ const postService = {
     }).then((response) => response.json()),
 
   deletePost: (postId) =>
-    fetch(`${BASE_URL}/${postId}`, { method: 'DELETE' }).then((response) =>
-      response.json()
-    ),
+    fetch(`${BASE_URL}/${postId}`, { method: 'DELETE' }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Something went wrong, can not delete')
+      }
+
+      return true
+    }),
 }
 
 export default postService
