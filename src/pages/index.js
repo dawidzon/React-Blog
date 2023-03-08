@@ -1,4 +1,5 @@
+import NotFound from './NotFound'
 import PostDetails from './PostDetails'
 import PostsList from './PostsList'
 
-export { PostDetails, PostsList }
+export { NotFound, PostDetails, PostsList }

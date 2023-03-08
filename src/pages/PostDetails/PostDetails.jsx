@@ -1,29 +1,36 @@
 import { LikeOutlined } from '@ant-design/icons'
 import { IconText, Loading } from 'components'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useNavigate, useParams } from 'react-router-dom'
+import { postService } from 'services'
 
 const PostDetails = () => {
   const { postId } = useParams()
-  const [post, setPost] = useState()
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    fetch(`http://localhost:3000/posts/${postId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setPost(data)
-      })
-      .finally(() => setLoading(false))
-  }, [])
+  const {
+    isLoading,
+    data: post,
+    error,
+  } = useQuery(['post', postId], () => postService.fetchPost(postId))
+
+  const navigate = useNavigate()
+  const handleNotFoundPage = () => navigate('/not-found')
+
+  if (error) {
+    if (error?.message === 'Not found') {
+      handleNotFoundPage()
+    } else {
+      return <h1>{error.message}</h1>
+    }
+  }
 
   return (
     <>
-      {loading && <Loading />}
-      {!loading && (
+      {isLoading && <Loading />}
+      {!isLoading && (
         <>
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
+          <h1>{post?.title}</h1>
+          <p>{post?.body}</p>
           <IconText icon={LikeOutlined} text={post.likesCount} />
         </>
       )}

@@ -1,27 +1,33 @@
 import { List } from 'antd'
 import { Loading } from 'components'
-import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
+import { postService } from 'services'
 
 import { PostPreview } from './components'
 
 const PostsList = () => {
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(false)
+  const {
+    isLoading,
+    data: posts,
+    error,
+  } = useQuery('posts', postService.fetchPosts)
 
-  useEffect(() => {
-    setLoading(true)
-    fetch('http://localhost:3000/posts')
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(data)
-      })
-      .finally(() => setLoading(false))
-  }, [])
+  const navigate = useNavigate()
+  const handleNotFoundPage = () => navigate('/not-found')
+
+  if (error) {
+    if (error?.message === 'Not found') {
+      handleNotFoundPage()
+    } else {
+      return <h1>{error.message}</h1>
+    }
+  }
 
   return (
     <>
-      {loading && <Loading />}
-      {!loading && (
+      {isLoading && <Loading />}
+      {!isLoading && (
         <List
           bordered
           itemLayout="vertical"
